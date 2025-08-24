@@ -21,14 +21,23 @@ export async function apiFetch(type: 'GET' | 'POST' | 'PUT' | 'DELETE', path: st
             body: payload == null ? undefined : JSON.stringify(payload)
         });
 
-        if(!res.ok){
-            console.warn("Response => ", res)
+        if (!res.ok) {
+            let errorMessage = `Error ${res.status}: ${res.statusText}`;
+
+            try {
+                // sometimes API still sends JSON error
+                const errorBody = await res.json();
+                errorMessage = errorBody.message || errorMessage;
+            } catch {
+                // if not JSON (like 404 HTML response), just keep default
+            }
+
+            throw new Error(errorMessage);
         }
 
-        return res.json()
-    }
-    catch(error){
-        console.log("GET request failed:", error);
+        return res.json();
+    } catch (error) {
+        console.error("API request failed:", error);
         throw error;
     }
 }
