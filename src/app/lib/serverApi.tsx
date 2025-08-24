@@ -25,11 +25,9 @@ export async function apiFetch(type: 'GET' | 'POST' | 'PUT' | 'DELETE', path: st
             let errorMessage = `Error ${res.status}: ${res.statusText}`;
 
             try {
-                // sometimes API still sends JSON error
                 const errorBody = await res.json();
                 errorMessage = errorBody.message || errorMessage;
             } catch {
-                // if not JSON (like 404 HTML response), just keep default
             }
 
             throw new Error(errorMessage);

@@ -18,9 +18,7 @@ export function apiFetch<T>(type: 'GET' | 'POST' | 'PUT' | 'DELETE', path: strin
             cache: "no-store",
             body: payload == null ? undefined : JSON.stringify(payload)
         }).then(async (res) => {
-debugger            
-console.log("Data =>", res)
-            const data = await res.json().catch(() => null); // safely parse JSON
+            const data = await res.json().catch(() => null);
 
             if (!res.ok) {
                 const errorMessage = data?.message || res.statusText || "Something went wrong";
