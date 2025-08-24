@@ -21,7 +21,7 @@ export function apiFetch<T>(type: 'GET' | 'POST' | 'PUT' | 'DELETE', path: strin
             const data = await res.json().catch(() => null);
 
             if (!res.ok) {
-                const errorMessage = data?.message || res.statusText || "Something went wrong";
+                const errorMessage = data?.error || res.statusText || "Something went wrong";
                 toast.error(errorMessage);
                 throw new Error(errorMessage);
             }
