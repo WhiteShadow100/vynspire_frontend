@@ -16,7 +16,6 @@ const initialState: AuthState = {
 if (typeof window !== "undefined") {
   const savedToken = Cookies.get("token");
   if (savedToken){
-    console.log(savedToken)
     initialState.token = JSON.parse(savedToken);
     initialState.isLoggedIn = true;
   }

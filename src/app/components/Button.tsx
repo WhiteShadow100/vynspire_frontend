@@ -5,7 +5,7 @@ import { MouseEventHandler } from "react"
 export default function Button ({children, onClick}:{children:React.ReactNode, onClick?: MouseEventHandler}) {
     return (
         <button
-            className="w-full h-full cursor-pointer rounded border-2"
+            className="w-full h-full cursor-pointer rounded border-2 "
             onClick={onClick}
         >
             {children}

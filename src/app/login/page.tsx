@@ -69,7 +69,7 @@ export default function Login() {
             className = 'w-full h-full flex justify-center items-center'
         >
             <div
-                className="w-2/8 h-fit p-4"
+                className="h-fit p-4 w-8/12 sm:w-6/12 md:w-4/12 lg:w-3/12"
             >
                 <Card>
                     <Group>

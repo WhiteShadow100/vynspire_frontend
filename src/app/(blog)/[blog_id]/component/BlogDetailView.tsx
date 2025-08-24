@@ -17,7 +17,7 @@ export default function BlogDetailView({ blogDetail } : { blogDetail: IBlogDetai
                 <hr />
 
                 <Group className="w-full h-10/12">
-                    <div className="overflow-scroll">
+                    <div className="overflow-scroll w-full h-full">
                         {blogDetail.content}
                     </div>
                 </Group>
@@ -26,7 +26,7 @@ export default function BlogDetailView({ blogDetail } : { blogDetail: IBlogDetai
 
                 <Group className="w-full h-1/12">
                     <div className="text-xs font-light">
-                        {blogDetail.author__username} | {(new Date(blogDetail.created_at).toString()) || ""}
+                        {blogDetail.author__username} | {(new Date(blogDetail.created_at).toDateString()) || ""}
                     </div>
                 </Group>
             </Card>

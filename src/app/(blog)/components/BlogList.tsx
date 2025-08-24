@@ -1,3 +1,5 @@
+'use client'
+
 import { Card } from "@/app/components/Card";
 import { TextButton } from "@/app/components/Button";
 import { useRouter } from "next/navigation";
@@ -7,15 +9,17 @@ import { Group } from "@/app/components/Group";
 import Link from "next/link";
 import { IBlog } from "../page";
 import { apiFetch } from "@/app/lib/serverApi";
+import { RootState } from "@/app/store";
+import { useSelector } from "react-redux";
 
 export default function BlogList({ blogList, setPageQuery, setUpdateId }: { blogList: IBlog[], setPageQuery: Dispatch<SetStateAction<number>>, setUpdateId: Dispatch<SetStateAction<number>> }){
     
     const router = useRouter();
 
+    const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+
     return (
-        <div
-            className = 'w-full h-full gap-3 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-        >
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-2">
             {
                 blogList.length > 0 ? (
                     blogList.map((blog, index) => (
@@ -26,31 +30,38 @@ export default function BlogList({ blogList, setPageQuery, setUpdateId }: { blog
                                         {blog.title}                                
                                     </div>
     
-                                    <div className="flex gap-2">                                        
-                                        <div className="w-fit h-fit">
-                                            <TextButton
-                                                title="Delete"
-                                                onClick={async () => {
-                                                    await apiFetch('DELETE', `posts/${blog.id}/`)
-                                                    router.refresh()
-                                                }}
-                                            >
-                                                <Trash size={17} />
-                                            </TextButton>
-                                        </div>  
-    
-                                        <div className="w-fit h-fit">
-                                            <TextButton
-                                                title="Edit"
-                                                onClick={() => {
-                                                    setUpdateId(blog.id);
-                                                    setPageQuery(2);
-                                                }}
-                                            >
-                                                <Edit3 size={17} />
-                                            </TextButton>
-                                        </div>
-                                    </div>
+                                    {
+                                        isLoggedIn ? (
+                                            <div className="flex gap-2">                                        
+                                                <div className="w-fit h-fit">
+                                                    <TextButton
+                                                        title="Delete"
+                                                        onClick={async () => {
+                                                            await apiFetch('DELETE', `posts/${blog.id}/`)
+                                                            router.refresh()
+                                                        }}
+                                                    >
+                                                        <Trash size={17} />
+                                                    </TextButton>
+                                                </div>  
+            
+                                                <div className="w-fit h-fit">
+                                                    <TextButton
+                                                        title="Edit"
+                                                        onClick={() => {
+                                                            setUpdateId(blog.id);
+                                                            setPageQuery(2);
+                                                        }}
+                                                    >
+                                                        <Edit3 size={17} />
+                                                    </TextButton>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <></>
+                                        ) 
+                                        
+                                    }
                                 </Group>
     
                                 <hr />

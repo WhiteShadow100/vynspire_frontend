@@ -18,7 +18,7 @@ export default function HeaderActionButton(){
 
     return (
         <div className="flex items-center justify-end align-middle w-full h-full">
-            <div className=" w-1/12 h-8">
+            <div className="h-8 w-1/3 sm:w-1/5 md:w-1/6 lg:w-1/12">
                 {
                     isLoggedIn ? (
                         <Button
