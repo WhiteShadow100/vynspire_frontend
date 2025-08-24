@@ -17,14 +17,18 @@ export function apiFetch<T>(type: 'GET' | 'POST' | 'PUT' | 'DELETE', path: strin
             },
             cache: "no-store",
             body: payload == null ? undefined : JSON.stringify(payload)
-        }).then((res) => {
-            // verifying response
+        }).then(async (res) => {
+debugger            
+console.log("Data =>", res)
+            const data = await res.json().catch(() => null); // safely parse JSON
+
             if (!res.ok) {
-                toast.error(res.statusText)
-                throw new Error(res.statusText);
+                const errorMessage = data?.message || res.statusText || "Something went wrong";
+                toast.error(errorMessage);
+                throw new Error(errorMessage);
             }
 
-            return res.json();
+            return data as T;
         })
         .then((data: T) => {
             // passing data to callback

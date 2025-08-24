@@ -8,7 +8,7 @@ import { BookOpenText, Edit3, Trash } from "lucide-react";
 import { Group } from "@/app/components/Group";
 import Link from "next/link";
 import { IBlog } from "../page";
-import { apiFetch } from "@/app/lib/serverApi";
+import { apiFetch } from "@/app/lib/clientApi";
 import { RootState } from "@/app/store";
 import { useSelector } from "react-redux";
 
@@ -37,8 +37,8 @@ export default function BlogList({ blogList, setPageQuery, setUpdateId }: { blog
                                                     <TextButton
                                                         title="Delete"
                                                         onClick={async () => {
-                                                            await apiFetch('DELETE', `posts/${blog.id}/`)
-                                                            router.refresh()
+                                                            apiFetch('DELETE', `posts/${blog.id}/`)
+                                                            // router.refresh()
                                                         }}
                                                     >
                                                         <Trash size={17} />
