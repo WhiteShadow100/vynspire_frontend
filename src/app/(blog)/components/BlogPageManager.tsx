@@ -8,6 +8,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { List, PlusCircle } from "lucide-react";
 import { Group } from "@/app/components/Group";
 import { IBlog } from "../page";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 
 export default function BlogPageManager({ blogList }: { blogList: IBlog[]}){
@@ -23,6 +25,8 @@ export default function BlogPageManager({ blogList }: { blogList: IBlog[]}){
 
     // holds updating blog id
     const[updateId, setUpdateId] = useState<number>(0)
+
+    const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
 
     useEffect(() => {
@@ -46,14 +50,20 @@ export default function BlogPageManager({ blogList }: { blogList: IBlog[]}){
                         <List size={17} />
                     </TextButton>
 
-                    <TextButton
-                        title="New"
-                        onClick={() => {
-                            setPageQuery(2)
-                        }}
-                    >
-                        <PlusCircle size={17} />
-                    </TextButton>                    
+                    {
+                        isLoggedIn ? (
+                            <TextButton
+                                title="New"
+                                onClick={() => {
+                                    setPageQuery(2)
+                                }}
+                            >
+                                <PlusCircle size={17} />
+                            </TextButton>                    
+                        ) : (
+                            <></>
+                        )
+                    }
                 </div>
             </Group>
 
